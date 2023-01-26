@@ -18,7 +18,11 @@
 
 
 (define (filter-lst fn lst)
-  'YOUR-CODE-HERE
+ (if (null? lst)
+     nil
+     (if (fn (car lst))
+         (cons (car lst) (filter-lst fn (cdr lst)))
+         (filter-lst fn (cdr lst))))  
 )
 
 ;;; Tests
@@ -29,7 +33,7 @@
 
 
 (define (make-adder num)
-  'YOUR-CODE-HERE
+  (lambda (inc) (+ num inc))
 )
 
 ;;; Tests
@@ -39,17 +43,21 @@
 
 
 (define lst
-  'YOUR-CODE-HERE
+  (list (list 1) 2 (list 3 4) 5)
 )
 
 
 (define (composed f g)
-  'YOUR-CODE-HERE
+  (lambda (inc) (f (g inc)))
 )
 
 
 (define (remove item lst)
-  'YOUR-CODE-HERE
+  (if (null? lst)
+      nil
+      (if (= (car lst) item)
+          (remove item (cdr lst))
+          (cons (car lst) (remove item (cdr lst)))))
 )
 
 
@@ -63,7 +71,24 @@
 
 
 (define (no-repeats s)
-  'YOUR-CODE-HERE
+  (define (judge item lst)
+    (if (null? lst)
+        #t
+        (if (= (car lst) item)
+            #f
+            (judge item (cdr lst)))))
+  (define (recurse lst remain)
+    (if (null? remain)
+        lst
+        (if (judge (car remain) lst)
+            (recurse (cons (car remain) lst) (cdr remain))
+            (recurse lst (cdr remain)))))
+  (define (reverse result lst)
+    (if (null? lst)
+        result
+        (reverse (cons (car lst) result) (cdr lst))))
+  (define b (recurse () s))
+  (reverse () b)
 )
 
 
