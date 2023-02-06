@@ -22,7 +22,7 @@
      nil
      (if (fn (car lst))
          (cons (car lst) (filter-lst fn (cdr lst)))
-         (filter-lst fn (cdr lst))))  
+         (filter-lst fn (cdr lst))))
 )
 
 ;;; Tests
@@ -71,24 +71,8 @@
 
 
 (define (no-repeats s)
-  (define (judge item lst)
-    (if (null? lst)
-        #t
-        (if (= (car lst) item)
-            #f
-            (judge item (cdr lst)))))
-  (define (recurse lst remain)
-    (if (null? remain)
-        lst
-        (if (judge (car remain) lst)
-            (recurse (cons (car remain) lst) (cdr remain))
-            (recurse lst (cdr remain)))))
-  (define (reverse result lst)
-    (if (null? lst)
-        result
-        (reverse (cons (car lst) result) (cdr lst))))
-  (define b (recurse () s))
-  (reverse () b)
+  (if (null? s) nil
+      (cons (car s) (no-repeats (filter (lambda (x) (not (eq? x (car s)))) (cdr s)))))
 )
 
 
